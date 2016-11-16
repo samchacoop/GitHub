@@ -1,0 +1,89 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+<head> <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.js"></script> </head>
+
+<header class="w3-container w3-theme w3-padding" id="myHeader">
+	<h1 class="w3-xxxlarge w3-animate-bottom">Concert Reviews</h1>
+</header>
+
+<body>
+
+
+<div>Reviews:	</div>						
+<div class="w3-row w3-border">
+		<% for(i=0; i<reviews.length; i++) { %>
+			<div class="w3-half w3-container w3-blue w3-border">
+			    <p><b>Review:</b> <%= reviews[i].review %></p>
+			  </div>
+		<% } %>
+</div>
+
+<div id="AddReviewForm" class="w3-modal">				
+    <div class="w3-modal-content w3-card-8 w3-animate-top">
+      <header class="w3-container w3-theme-l1">
+        <span onclick="document.getElementById('AddReviewForm').style.display='none'" class="w3-closebtn">×</span>
+        <h4>Which Concert Would You Like To Review?</h4>
+      </header>
+      <div class="w3-padding">
+        <form id="AddReviewForm" method="post" action="//localhost:3000/addReview">
+        	<% for(var i=0; i<concerts.length; i++) { %>
+				 <input type="radio" name="concertForm">
+				 	<%= concerts[i].artist %> at <%= concerts[i].venue %> on <%= concerts[i].date %>
+				 <br>
+			  <% } %>
+			  <input type="text" id="reviewTextArea" name="reviewTextArea">
+		  	<footer class="w3-container w3-theme-l1">
+		      <button class="w3-btn w3-xlarge w3-dark-grey w3-hover-light-grey" style="font-weight:900;">
+	       		SUBMIT <input type="submit" style="display : none;" onclick="addReview()"/>
+	       	  </button>  
+	      	</footer>
+		</form>
+	  </div>
+	</div>
+</div>
+
+
+
+
+<div class="w3-padding-32">									<!-- creating ADD and REMOVE buttons -->
+	<br>
+  <button class="w3-btn w3-xlarge w3-dark-grey w3-hover-light-grey" onclick="document.getElementById('AddReviewForm').style.display='block'" style="font-weight:900;">ADD REVIEW</button>
+  <button class="w3-btn w3-xlarge w3-dark-grey w3-hover-light-grey" onclick="document.getElementById('EditReviewForm').style.display='block'" style="font-weight:900;">EDIT REVIEW</button>
+</div>
+
+<hr>
+<br>
+<div class="w3-center">
+  <h2></h2>
+  <ul class="w3-pagination w3-padding-32">
+    <li><a href="javascript:history.back();">«</a></li>
+    <li><a class="w3-theme" href="//localhost:3000/home">Home</a></li>
+    <li><a href="//localhost:3000/profile">Profile</a></li>
+    <li><a href="//localhost:3000/concerts">Concerts</a></li>
+    <li><a href="//localhost:3000/followers">Followers</a></li>
+  </ul>
+</div>
+<br>
+
+</body>
+
+  <script>
+			function addReview(){
+					var reviewtext = "Hello"
+						reviewId = "01111";
+
+			 		$.ajax({
+					  type: "POST",
+					  url: "//localhost:3000/addReview",
+					  data: {"reviewtext" : reviewtext, "reviewId" : reviewId}, 
+					  dataType: 'text',
+					  success: function(response) {
+					  	console.log(response);
+					  	console.log("success");
+					}
+				});
+			}
+		</script>
+

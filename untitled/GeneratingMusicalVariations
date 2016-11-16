@@ -1,0 +1,55 @@
+from PythonEuterpea import *
+from copy import deepcopy
+from random import random
+from SimpleMelodies import *
+
+
+# Find overall highest and lowest pitches in music structure
+def pitchRange(x):
+    if (x.__class__.__name__ == 'Music'):
+        return pitchRange(x.tree)
+    elif (x.__class__.__name__ == 'Note'):
+        return (x.pitch, x.pitch)
+    elif (x.__class__.__name__ == 'Rest'):
+        return (-1, -1)
+    elif (x.__class__.__name__ == 'Seq'):
+        leftRange = pitchRange(x.left)
+        rightRange = pitchRange(x.right)
+        lowest = -1
+        # find the overall lowest
+        if leftRange[0] < 0 or rightRange[0] <= leftRange[0]:
+            lowest = rightRange[0]
+        else:
+            lowest = leftRange[0]
+
+        # find the overall highest
+        highest = -1
+        if leftRange[1] < 0 or leftRange[1] <= rightRange[1]:
+            highest = rightRange[1]
+        else:
+            highest = leftRange[1]
+        result = (lowest, highest)
+        return result
+    elif (x.__class__.__name__ == 'Par'):
+        topRange = pitchRange(x.top)
+        botRange = pitchRange(x.bot)
+        lowest = -1
+        if topRange[0] < 0 or botRange[0] <= topRange[0]:
+            lowest = botRange[0]
+        else:
+            lowest = topRange[0]
+        highest = -1
+        if topRange[1] < 0 or topRange[1] <= botRange[1]:
+            highest = botRange[1]
+        else:
+            highest = topRange[1]
+        result = (lowest, highest)
+        return result
+    elif (x.__class__.__name__ == 'Modify'):
+        return pitchRange(x.tree)
+    else:
+        raise EuterpeaException("Unrecognized musical structure: " + str(x))
+
+
+foo = pitchRange(pitchListToChord([60, 55, 67, 69, 60, 60]))
+print foo

@@ -1,0 +1,42 @@
+{
+	"Photo_Metadata":[{
+		"IMG_1":{
+			"FILE_SIZE":"",
+			"WIDTH":"",
+			"HEIGHT":"",
+			"ISO":"",
+			"FOCAL_LENGTH":"",
+			"SHUTTER_SPEED":"",
+			"APETURE_VALUE":""
+		},
+		"IMG_2": {
+			"FILE_SIZE":"",
+			"WIDTH":"",
+			"HEIGHT":"",
+			"ISO":"",
+			"FOCAL_LENGTH":"",
+			"SHUTTER_SPEED":"",
+			"APETURE_VALUE":""
+		},
+		"IMG_3":{
+			"FILE_SIZE":"",
+			"WIDTH":"",
+			"HEIGHT":"",
+			"ISO":"",
+			"FOCAL_LENGTH":"",
+			"SHUTTER_SPEED":"",
+			"APETURE_VALUE":""
+		},
+		"IMG_4":{
+			"FILE_SIZE":"",
+			"WIDTH":"",
+			"HEIGHT":"",
+			"ISO":"",
+			"FOCAL_LENGTH":"",
+			"SHUTTER_SPEED":"",
+			"APETURE_VALUE":""
+		}
+		}
+	]
+}
+

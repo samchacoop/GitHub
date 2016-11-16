@@ -1,0 +1,45 @@
+var locationData;
+var table
+
+function preload() {
+	
+	table = $("results").load("http://www.navitime.co.jp/taxi/result/?start=%7B%22lon%22%3A139.706361%2C%22lat%22%3A35.653%2C%22nodeId%22%3A%2200003544%22%2C%22name%22%3A%22%E6%B8%8B%E8%B0%B7%22%2C%22road-type%22%3A%22default%22%7D&goal=%7B%22lon%22%3A139.800443%2C%22lat%22%3A35.70673%2C%22nodeId%22%3A%2200005270%22%2C%22name%22%3A%22%E6%B5%85%E8%8D%89%22%2C%22road-type%22%3A%22default%22%7D&roadFare=free&time=2016-04-12T00%3A45%3A00&basis=1.json")
+	
+
+
+	print(table);
+	//var taxiResultsURL = "http://www.navitime.co.jp/taxi/result/?start=%7B%22lon%22%3A139.706361%2C%22lat%22%3A35.653%2C%22nodeId%22%3A%2200003544%22%2C%22name%22%3A%22%E6%B8%8B%E8%B0%B7%22%2C%22road-type%22%3A%22default%22%7D&goal=%7B%22lon%22%3A139.800443%2C%22lat%22%3A35.70673%2C%22nodeId%22%3A%2200005270%22%2C%22name%22%3A%22%E6%B5%85%E8%8D%89%22%2C%22road-type%22%3A%22default%22%7D&roadFare=free&time=2016-04-12T00%3A45%3A00&basis=1.json";
+	//table = loadJSON(taxiResultsURL);
+	//print(taxiResultsData);
+   if (geoCheck() == true){
+   		locationData =  getCurrentPosition();
+    }else{
+    	print("Geolocation error...")
+    }
+	
+}
+
+function setup(){
+
+	createCanvas(480,270);
+	stroke(0);
+	fill(150);
+
+  	print(locationData.latitude)
+    print(locationData.longitude)
+    print(locationData.accuracy)
+    print(locationData.altitude)
+    print(locationData.altitudeAccuracy)
+    print(locationData.heading)
+    print(locationData.speed)
+    print(table)
+
+}
+
+function draw(){
+	
+	background(255);
+	rect(50,50,50,50);
+	getCurrentPosition();
+
+}

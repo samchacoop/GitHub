@@ -1,0 +1,189 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+<head> <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script> </head>
+
+<header class="w3-container w3-theme w3-padding" id="myHeader">
+	<h1 class="w3-xxxlarge w3-animate-bottom">Concerts</h1>
+	<script>
+		// var createCookie = function(name, value, days) {
+	 //    var expires;
+	 //    if (days) {
+	 //        var date = new Date();
+	 //        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+	 //        expires = "; expires=" + date.toGMTString();
+	 //    }
+	 //    else {
+	 //        expires = "";
+	 //    }
+	 //    document.cookie = name + "=" + value + expires + "; path=/";
+		// }
+
+		// function getCookie(c_name) {
+		//     if (document.cookie.length > 0) {
+		//         c_start = document.cookie.indexOf(c_name + "=");
+		//         if (c_start != -1) {
+		//             c_start = c_start + c_name.length + 1;
+		//             c_end = document.cookie.indexOf(";", c_start);
+		//             if (c_end == -1) {
+		//                 c_end = document.cookie.length;
+		//             }
+		//             return unescape(document.cookie.substring(c_start, c_end));
+		//         }
+		//     }
+		//     return "";
+		// }
+		// if(getCookie('mycookie') === null){
+		// 	var json_str = JSON.stringify([<%concerts%>]);
+		// 	console.log(json_str);
+		// 	//createCookie('mycookie', json_str, 5);
+		// }
+		// var json_str = getCookie('mycookie');
+		// concerts = JSON.parse(json_str);
+		// console.log(concerts);
+	</script>
+
+
+</header>
+
+
+
+
+<div id = class="w3-row w3-border">							<!-- creating Concert Info Divs -->
+	<script>var i;</script>
+	<% for(i=1; i<concerts.length+1; ++i) { %>
+				<div class="w3-half w3-container w3-blue w3-border">
+				    <p><b>Artist:</b> <%= concerts[i-1].artist %></p>
+					<p><b>Venue:</b> <%= concerts[i-1].venue %></p>
+					<p><b>Date:</b> <%= concerts[i-1].date %></p>
+					<p><b>Rating:</b> <%= concerts[i-1].rating %></p>
+				  </div>
+	<% } %>
+</div>
+
+
+
+<div class="w3-padding-32">									<!-- creating ADD and REMOVE buttons -->
+	<br>
+  <button class="w3-btn w3-xlarge w3-dark-grey w3-hover-light-grey" onclick="document.getElementById('AddConcertForm').style.display='block'" style="font-weight:900;">ADD CONCERT</button>
+  <button class="w3-btn w3-xlarge w3-dark-grey w3-hover-light-grey" onclick="document.getElementById('RemoveConcertForm').style.display='block'" style="font-weight:900;">REMOVE CONCERT</button>
+</div>
+	
+
+															<!-- creating ADD CONCERT FORM -->
+<div id="AddConcertForm" class="w3-modal">					
+    <div class="w3-modal-content w3-card-8 w3-animate-top">
+      <header class="w3-container w3-theme-l1">
+        <span onclick="document.getElementById('AddConcertForm').style.display='none'" class="w3-closebtn">×</span>
+        <h4>Tell us about the concert!</h4>
+      </header>
+      <div class="w3-padding">
+        <form id="addConcertForm" method="post" action="//localhost:3000/addConcert">
+		  Artist:<br>
+		  	<input type="text" name="artist" placeholder="Artist" required><br>
+		  Venue:<br>
+		 	 <input type="text" name="venue" placeholder="Venue" required><br>
+		  Date:<br>
+		 	 <input type="date" name="date" required><br>
+	 	  Rating:<br>
+	 	 	 <input type="range" name="rating" min="0" max="10"> 0-10 <br>
+		    <footer class="w3-container w3-theme-l1">
+      	     <button class="w3-btn w3-xlarge w3-dark-grey w3-hover-light-grey" style="font-weight:900;">
+	       		ADD <input type="submit" style="display : none;" onclick="buttonPress()"/>
+	       	 </button>
+	      	</footer>
+  		 </form>
+
+  		 <script>
+  		 	function buttonPress(){
+  		 		artist = document.getElementById('artist').value;
+  		 		venue = document.getElementById('venue').value;
+				date = document.getElementById('date').value;
+				rating = document.getElementById('rating').value;
+
+  		 		$.ajax({
+				  type: "POST",
+				  url: "//localhost:3000/addConcert",
+				  data: { "artist" : artist, "venue" : venue, "date" : date, "rating" : rating}, 
+				  success: function(response) {
+				  	console.log(response);
+				  }
+				});
+  		 	}
+  		 </script>
+      </div>
+      
+    </div>
+</div>
+
+
+															<!-- creating REMOVE CONCERT FORM -->
+<div id="RemoveConcertForm" class="w3-modal">				
+    <div class="w3-modal-content w3-card-8 w3-animate-top">
+      <header class="w3-container w3-theme-l1">
+        <span onclick="document.getElementById('RemoveConcertForm').style.display='none'" class="w3-closebtn">×</span>
+        <h4>Which Concert Would You Like To Remove?</h4>
+      </header>
+      <div class="w3-padding">
+        <form id="RemoveConcertForm" method="post" action="//localhost:3000/removeConcert">
+        	<% for(var i=0; i<concerts.length; i++) { %>
+				 <input type="radio" name="concertForm" > 
+				 	<%= concerts[i].artist %> at <%= concerts[i].venue %> on <%= concerts[i].date %>
+				 <br>
+
+			  <% } %>
+		  	<footer class="w3-container w3-theme-l1">
+      	      <button class="w3-btn w3-xlarge w3-dark-grey w3-hover-light-grey" style="font-weight:900;">
+	       		REMOVE <input type="submit" style="display : none;" onclick="removeConcert()"/>
+	       	 	</button> 
+	      	</footer>
+	      	  <script>
+	      	  	var removeIndex;
+				function removeConcert(){	
+					    var concerts = document.forms["concertForm"];
+					    var i;
+					    for (i = 0; i < concerts.length; i++) {
+					        if (concerts[i].checked) {
+					            removeIndex = i;
+					            console.log(concerts[i])
+					        }
+					    }
+					  
+
+					//console.log(document.getElementById('concertForm:selected').value);	
+					
+
+  		 		$.ajax({
+				  type: "POST",
+				  url: "//localhost:3000/removeConcert",
+				  data: { "removeIndex" : removeIndex}, 
+				  success: function(response) {
+				  	console.log(response);
+				  }
+				});
+			}	
+
+			</script>
+
+  		</form>
+		
+      </div> 
+    </div>
+</div>
+
+<hr>
+<div class="w3-center">
+  <h2></h2>
+  <br>
+  <hr>
+  <ul class="w3-pagination w3-padding-32">
+    <li><a href="javascript:history.back();">«</a></li>
+    <li><a class="w3-theme" href="//localhost:3000/home">Home</a></li>
+    <li><a href="//localhost:3000/profile">Profile</a></li>
+    <li><a href="//localhost:3000/reviews">Reviews</a></li>
+    <li><a href="//localhost:3000/followers">Followers</a></li>
+  </ul>
+</div>
+<br>

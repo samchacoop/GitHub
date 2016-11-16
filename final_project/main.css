@@ -1,0 +1,11 @@
+h1 {
+ font-color: blue;
+}
+
+html { 
+  background: url(Cityview.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}

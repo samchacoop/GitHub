@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> Dynamic website </title>
+  </head>
+
+  <body>
+  	<body style="background-color:powderblue;">
+
+  	<div id="container">
+      <p>
+        To install React, follow the instructions on
+        <a href="https://github.com/facebook/react/">GitHub</a>.
+      </p>
+      <p>
+        If you can see this, React is <strong>not</strong> working right.
+        If you checked out the source from GitHub make sure to run <code>grunt</code>.
+      </p>
+    </div>
+
+  	<script src="../../build/react.js"></script>
+    <script src="../../build/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.js"></script>
+	<script type="text/babel">
+      var Counter = React.createClass({
+        getInitialState: function () {
+          return { count: 0 };
+        },
+        handleClick: function () {
+          this.setState({
+            count: this.state.count + 1,
+          });
+        },
+        render: function () {
+          return (
+            <button onClick={this.handleClick}>
+              Click me! Number of clicks: {this.state.count}
+            </button>
+          );
+        }
+      });
+      ReactDOM.render(
+         <Counter />,
+        document.getElementById('container')
+      );
+    </script>
+
+  </body>
+ </html>

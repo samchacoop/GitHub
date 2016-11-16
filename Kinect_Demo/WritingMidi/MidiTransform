@@ -1,0 +1,19 @@
+import midi
+from PythonEuterpea import *
+import csv
+import re
+import os
+
+os.remove('WritingMidi/foo.mid')
+
+with open('WritingMidi/pitches.txt') as inputfile:
+    results = list(csv.reader(inputfile))
+
+cleanResults = []
+cleanResult1 = 0
+for index in range(0,len(results[0])-1):
+    cleanResult1 = re.sub("[[]","",results[0][index])
+    cleanResults.append(int(cleanResult1))
+
+f = pitchListToMusic(cleanResults, 0.5, 80)
+musicToMidi("WritingMidi/foo.mid",f)

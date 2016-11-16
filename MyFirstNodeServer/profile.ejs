@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<title>Your Profile</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<link href="fbstyle.css" rel="stylesheet" type="text/css">
+<body class="w3-content" style="max-width:1300px">
+   
+<head> <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script> 
+<script> var PROFILE_PICTURE; </script> 
+</head>
+
+
+<!-- First Grid: Logo & About -->
+<div class="w3-row">
+  <div class="w3-half w3-black w3-container w3-center" style="height:700px">
+    <div class="w3-padding-64">
+    </div>
+    <div class="w3-padding-64">
+      <a href="//localhost:3000/home" class="w3-btn w3-btn-block w3-hover-blue-grey w3-padding-16">Home</a>
+      <a href="//localhost:3000/concerts" class="w3-btn w3-btn-block w3-hover-teal w3-padding-16">My Concerts</a>
+      <a href="//localhost:3000/reviews" class="w3-btn w3-btn-block w3-hover-dark-grey w3-padding-16">My Reviews</a>
+      <a href="//localhost:3000/followers" class="w3-btn w3-btn-block w3-hover-brown w3-padding-16">Follow</a>
+    </div>
+  </div>
+  <div class="w3-half w3-blue-grey w3-container" style="height:700px">
+    <div class="w3-padding-64 w3-center">
+      <h1 id="user_data"> <%=userInformation[0].first_name+" "+userInformation[0].last_name%> </h1>
+      <img id="profile_picture" class="w3-margin" alt="Profile Picture">
+      </div>
+        <div align="center">             <!-- creating Concert Info Divs -->
+          <b>Concerts:</b> <%=concerts.length%> <br>
+          <b>My Artists:</b>
+          <% for(var i=0; i<concerts.length; i++) { %>
+              <%=concerts[i].artist%>
+              <b>| </b> 
+          <% } %> 
+          <br>
+          <b>My Venues:</b>
+         <% for(var i=0; i<concerts.length; i++) { %>
+              <%=concerts[i].venue%>
+              <b>| </b> 
+          <% } %> 
+        </div>
+    </div>
+  </div>
+</div>
+
+  <script src="//connect.facebook.net/en_US/all.js"></script>
+
+  <div id="fb-root"></div>
+<script>
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      var accessToken = response.authResponse.accessToken;
+      console.log(accessToken);
+      //document.getElementById('login_button').style = "display:none";
+    } else if (response.status === 'not_authorized') {
+
+
+    } else {
+
+    }
+  }
+
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '165776200499183',
+    cookie     : true,  // enable cookies to allow the server to access 
+                        // the session
+    xfbml      : true,  // parse social plugins on this page
+    version    : 'v2.5' // use graph api version 2.5
+  });
+
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+    getPROFILE_PICTURE(response);
+  });
+
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  // Here we run a very simple test of the Graph API after login is
+  // successful.  See statusChangeCallback() for when this call is made.
+  function getPROFILE_PICTURE() {
+    FB.api('/me', {fields: 'first_name, last_name'}, function(response) {
+      document.getElementById('profile_picture').src = "//graph.facebook.com/"+response.id+"/picture?type=large";        
+    });
+  }
+
+</script>
+
+<div id="status">
+    <script type="text/javascript">
+    function login(){
+      FB.login(function(response) {
+        if (response.status === 'connected') {
+          getUSER_DATA();
+          getPROFILE_PICTURE();
+        } else if (response.status === 'not_authorized') {
+          // The person is logged into Facebook, but not your app.
+        } else {
+          // The person is not logged into Facebook, so we're not sure if
+          // they are logged into this app or not.
+        }
+      });
+    }
+   
+  </script>
+</div>
+
+
+<!-- Footer -->
+<footer class="w3-container w3-black w3-padding-16">
+</footer>
+
+</body>
+</html>
+
